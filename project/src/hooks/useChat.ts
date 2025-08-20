@@ -40,7 +40,7 @@ export function useChat() {
 
     try {
       const sessionId = getSessionId();
-      const res = await fetch('http://localhost:7860/query', {
+      const res = await fetch('https://guthealthchat.onrender.com/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_query: content, session_id: sessionId })
