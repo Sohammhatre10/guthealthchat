@@ -45,19 +45,22 @@ app = FastAPI(
     version="1.0.0"
 )
 
-MONGO_URI = os.getenv("MONGODB_URI")
-mongo_client = MongoClient(MONGO_URI)
-db = mongo_client["guthealth_db"]
-conversations_collection = db["conversations"]
+origins = [
+    os.getenv("FRONTEND_ENDPOINT"),
+]
 
-from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+MONGODB_URI = os.getenv("MONGODB_URI")
+mongo_client = MongoClient(MONGODB_URI)
+db = mongo_client["guthealth_db"]
+conversations_collection = db["conversations"]
 
 rag_system = None
 sessions: Dict[str, Dict] = {}
